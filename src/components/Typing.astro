@@ -1,0 +1,21 @@
+---
+interface Props { words: string[] }
+const { words } = Astro.props;
+const id = "typing-" + Math.abs(words.join().length * 7 + words[0].length);
+---
+<strong id={id} class="typing" data-words={JSON.stringify(words)}></strong>
+<style>.typing { color: var(--color-warning); }</style>
+<script type="module" define:vars={{ id }}>
+  const el = document.getElementById(id);
+  const words = JSON.parse(el.dataset.words);
+  let w = 0, c = 0, deleting = false;
+  (function tick() {
+    const word = words[w];
+    el.textContent = word.slice(0, c);
+    if (!deleting && c < word.length) c++;
+    else if (deleting && c > 0) c--;
+    else if (!deleting) { deleting = true; setTimeout(tick, 1400); return; }
+    else { deleting = false; w = (w + 1) % words.length; }
+    setTimeout(tick, deleting ? 60 : 110);
+  })();
+</script>
