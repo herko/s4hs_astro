@@ -1,0 +1,96 @@
+---
+import { Image } from "astro:assets";
+import klokoc1 from "../assets/static/monografia/obecna-monografia-klokoc-1.jpg";
+import klokoc2 from "../assets/static/monografia/obecna-monografia-klokoc-2.jpg";
+import klokoc3 from "../assets/static/monografia/obecna-monografia-klokoc-3.jpg";
+import klokoc4 from "../assets/static/monografia/obecna-monografia-klokoc-4.jpg";
+
+const steps = [
+  { n: "01.", title: "Koncept", text: "Vypracujeme koncept obsahu, plán a časový harmonogram realizácie projektu." },
+  { n: "02.", title: "Financovanie", text: "Načrtneme spôsob hľadania alternatívnych zdrojov financovania - grantové výzvy." },
+  { n: "03.", title: "Rukopis", text: "Zriadime autorský kolektív, pripravíme rukopis s odbornou recenziou a jazykovou redakciou." },
+  { n: "04.", title: "Grafika", text: "Pripravíme niekoľko návrhov grafického spracovania a zalomenia publikácie." },
+  { n: "05.", title: "Tlač & Prezentácia", text: "Oslovíme tlačiarne a pomôžeme s prezentovaním výslednej práce." },
+];
+---
+<section class="container section">
+  <h2 class="title"><strong>Ciele</strong> &amp; <strong>poslanie</strong></h2>
+  <div class="goals">
+    <p>Našim cieľom je vytvárať podmienky na realizáciu interdisciplinárnych, vedeckých a výskumných projektov. Tieto aktivity realizujeme v spolupráci s domácimi a zahraničnými inštitúciami, grantovými agentúrami na podporu vedeckých projektov.</p>
+    <p>Spolupracujeme na organizovaní kultúrnych a popularizačno-náučných podujatí, pri ktorých sa výsledkami výskumu v čo najprijateľnejšej forme môže oboznámiť široká verejnosť zainteresovaná hlavne v histórii, ale aj v príbuzných vedách ako sociológia, etnografia či pedagogika.</p>
+  </div>
+
+  <hr class="divider" />
+
+  <div class="monografie">
+    <div class="showcase">
+      <h3 class="mono-title">Realizácie obecných monografií</h3>
+      <p class="mono-intro">Samosprávam a jej predstaviteľom ponúkame spoluprácu na realizácii obecnej monografie</p>
+      <div class="gallery">
+        <Image src={klokoc1} alt="Obecná monografia Klokoč — obálka" />
+        <Image src={klokoc3} alt="Obecná monografia Klokoč — ukážka strán" />
+        <Image src={klokoc4} alt="Obecná monografia Klokoč — titulná strana" />
+        <Image src={klokoc2} alt="Obecná monografia Klokoč — ukážka strán" />
+      </div>
+    </div>
+
+    <ol class="steps">
+      {steps.map((s) => (
+        <li>
+          <span class="badge">{s.n}</span>
+          <div>
+            <h4>{s.title}</h4>
+            <p>{s.text}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<section class="bg"><div class="container section services">
+  <div>
+    <h3>Preklady, redakčné práce, grafické návrhy</h3>
+    <p><strong>Vypracujeme preklady</strong> z poľského a maďarského jazyka. Pre preklady do slovenského jazyka či slovenské texty a rukopisy vieme zabezpečiť aj odbornú jazykovú redakciu a korekciu.</p>
+  </div>
+  <div>
+    <h3>Prednášky</h3>
+    <p>Realizujeme odborné aj populárno-náučné prednášky z oblasti histórie pre základné, stredné školy a kultúrne inštitúcie. Zámerom je zatraktívniť a doplniť obsah vyučovania dejepisu na jednotlivých stupňoch škôl.</p>
+  </div>
+</div></section>
+
+<style>
+  .title { font-weight: var(--weight-medium); }
+  .title strong { font-weight: var(--weight-semibold); }
+  .goals { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); }
+  .goals p { color: var(--color-text); margin: 0; }
+  .divider { border: 0; border-top: 1px solid var(--color-border); margin-block: var(--space-4); }
+
+  .monografie { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-5); align-items: center; }
+  .mono-title { text-align: right; font-size: var(--h4); }
+  .mono-intro { text-align: right; color: var(--color-muted); margin-bottom: var(--space-3); }
+  .gallery { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-2); align-items: end; }
+  .gallery :global(img) { width: 100%; height: auto; border-radius: var(--radius); box-shadow: var(--shadow-soft); }
+
+  .steps { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--space-3); }
+  .steps li { display: flex; gap: var(--space-2); align-items: flex-start; }
+  .badge {
+    flex: 0 0 auto;
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 2.5rem; height: 2.5rem; border-radius: 50%;
+    background: color-mix(in srgb, var(--color-primary) 12%, transparent);
+    color: var(--color-primary); font-weight: var(--weight-semibold); font-size: 0.8rem;
+  }
+  .steps h4 { margin: 0 0 0.15rem; font-size: 1rem; font-weight: var(--weight-medium); }
+  .steps p { margin: 0; color: var(--color-text); font-size: 0.95rem; }
+
+  .bg { background: var(--color-bg-light); }
+  .services { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-5); }
+  .services h3 { font-size: var(--h4); }
+  .services p { color: var(--color-text); margin: 0; }
+
+  @media (max-width: 767px) {
+    .goals, .monografie, .services { grid-template-columns: 1fr; gap: var(--space-3); }
+    .mono-title, .mono-intro { text-align: left; }
+  }
+</style>

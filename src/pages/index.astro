@@ -6,6 +6,7 @@ import Typing from "../components/Typing.astro";
 import PostCard from "../components/PostCard.astro";
 import PublicationCard from "../components/PublicationCard.astro";
 import TeamCarousel from "../components/TeamCarousel.astro";
+import About from "../components/About.astro";
 
 const heroImages = Object.values(
   import.meta.glob("../assets/static/hero/*.jpg", { eager: true, import: "default" })
@@ -30,15 +31,17 @@ const authors = (await getCollection("authors")).sort((a, b) => a.data.lastName.
     </div>
   </section>
 
-  <section class="container section">
-    <h2>Najnovšie články</h2>
-    <div class="grid grid-posts">{postsWithAuthors.map(({ post, author }) => <PostCard post={post} author={author} />)}</div>
-  </section>
-
   <section class="bg"><div class="container section">
     <h2>Publikácie</h2>
     <div class="grid grid-pubs">{publications.map((publication) => <PublicationCard publication={publication} />)}</div>
   </div></section>
+
+  <About />
+
+  <section class="container section">
+    <h2>Najnovšie články</h2>
+    <div class="grid grid-posts">{postsWithAuthors.map(({ post, author }) => <PostCard post={post} author={author} />)}</div>
+  </section>
 
   <section class="bg"><div class="container section">
     <h2>Náš <strong>tím</strong></h2>
