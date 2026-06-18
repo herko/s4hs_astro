@@ -13,6 +13,7 @@ export async function getStaticPaths() {
 }
 const { post } = Astro.props;
 const author = await getEntry(post.data.author);
+if (!author) throw new Error(`Missing author for post ${post.id}`);
 const { Content } = await render(post);
 const name = fullNameWithTitles(author.data);
 const date = post.data.publishedAt.toLocaleDateString("sk-SK", { day: "numeric", month: "long", year: "numeric" });
@@ -22,7 +23,7 @@ const date = post.data.publishedAt.toLocaleDateString("sk-SK", { day: "numeric",
     <h1>{post.data.title}</h1>
     <div class="byline">
       <Image class="av" src={author.data.avatar ?? noAvatar} alt={name} width={48} height={48} />
-      <a href={`/autori/${author.id}`}>{name}</a><span class="muted">· {date}</span>
+      <a href={`/autori/${author.id}`}>{name}</a><span class="muted"> · {date}</span>
     </div>
     <Prose markdown={post.data.description} />
     {post.data.image && <Image class="hero" src={post.data.image} alt={post.data.title} width={1024} height={640} />}

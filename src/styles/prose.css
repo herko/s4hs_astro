@@ -1,0 +1,15 @@
+/* Typography for rendered Markdown content (.prose) — used by <Prose> and by
+   <div class="prose"><Content/></div> body wrappers across detail pages. */
+.prose p { margin: 0 0 var(--space-2); }
+.prose h2 { font-size: var(--h3); margin-top: var(--space-3); }
+.prose h3 { font-size: var(--h4); margin-top: var(--space-3); }
+.prose img { border-radius: var(--radius); margin-block: var(--space-2); }
+.prose a { color: var(--color-primary); }
+.prose ul, .prose ol { margin: 0 0 var(--space-2); padding-left: var(--space-3); }
+.prose li { margin-bottom: var(--space-1); }
+.prose blockquote {
+  border-left: 3px solid var(--color-border);
+  padding-left: var(--space-2);
+  margin-inline: 0;
+  color: var(--color-muted);
+}

@@ -5,9 +5,3 @@ const { markdown } = Astro.props;
 const html = markdown ? marked.parse(markdown) : "";
 ---
 <div class="prose" set:html={html} />
-<style>
-  .prose :global(p) { margin: 0 0 var(--space-2); }
-  .prose :global(img) { border-radius: var(--radius); margin-block: var(--space-2); }
-  .prose :global(h2) { font-size: var(--h3); margin-top: var(--space-3); }
-  .prose :global(blockquote) { border-left: 3px solid var(--color-border); padding-left: var(--space-2); color: var(--color-muted); }
-</style>
