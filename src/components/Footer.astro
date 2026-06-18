@@ -1,11 +1,65 @@
 ---
+import Icon from "./Icon.astro";
 const year = new Date().getFullYear();
+const about = [
+  { href: "/", label: "Home" },
+  { href: "/publikacie", label: "Publikácie" },
+  { href: "/autori", label: "Autori" },
+  { href: "/clanky", label: "Články" },
+];
 ---
 <footer class="footer">
-  <div class="container">
-    <p>© {year} Society for human studies</p>
+  <div class="container grid">
+    <div class="brand-col">
+      <a href="/" class="brand">S4HS</a>
+      <p class="copy">
+        © Society for human studies - {year}<br />
+        Všetky práva vyhradené. <span class="lock"><Icon name="lock" size={14} /></span>
+      </p>
+    </div>
+
+    <nav class="col">
+      <h3>About</h3>
+      <ul>
+        {about.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+      </ul>
+    </nav>
+
+    <div class="col">
+      <h3>Kontakty</h3>
+      <address>
+        <span>IČO: 50614304</span>
+        <span>IBAN: SK54 8330 0000 0020 0119 3317</span>
+        <span>SÍDLO: Ružomberok</span>
+        <a href="mailto:info@s4hs.sk">info@s4hs.sk</a>
+      </address>
+    </div>
   </div>
 </footer>
 <style>
-  .footer { border-top: 1px solid var(--color-border); background: var(--color-bg-light); padding-block: var(--space-4); margin-top: var(--space-5); color: var(--color-muted); }
+  .footer { background: #1e2022; color: rgba(255, 255, 255, 0.5); margin-top: var(--space-5); }
+  .grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1.4fr;
+    gap: var(--space-4);
+    padding-block: var(--space-5);
+  }
+  .brand-col { display: flex; flex-direction: column; }
+  .brand { font-size: 2.5rem; font-weight: var(--weight-bold); color: #fff; letter-spacing: 0.02em; }
+  .brand:hover { text-decoration: none; }
+  .copy { font-size: 0.85rem; margin: auto 0 0; line-height: 1.7; }
+  .lock { display: inline-block; vertical-align: middle; opacity: 0.6; }
+
+  .col h3 { color: #fff; font-size: 1rem; font-weight: var(--weight-medium); margin: 0 0 var(--space-3); }
+  .col ul { list-style: none; margin: 0; padding: 0; }
+  .col li { margin-bottom: var(--space-2); }
+  .col a, address span { color: rgba(255, 255, 255, 0.5); }
+  .col a:hover, address a:hover { color: #fff; text-decoration: none; }
+  address { font-style: normal; display: flex; flex-direction: column; gap: var(--space-2); }
+
+  @media (max-width: 767px) {
+    .grid { grid-template-columns: 1fr; gap: var(--space-4); padding-block: var(--space-4); }
+    .brand-col { margin-bottom: var(--space-2); }
+    .copy { margin-top: var(--space-2); }
+  }
 </style>
