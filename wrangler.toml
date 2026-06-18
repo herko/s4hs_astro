@@ -1,7 +1,6 @@
 name = "s4hs"
-compatibility_date = "2026-06-18"
+pages_build_output_dir = "dist"
 
-# Static site (no Worker script) — deploy the built `dist/` as Workers Assets.
-# Build first (`npm run build`), then `wrangler deploy`.
-[assets]
-directory = "./dist"
+# Cloudflare Pages static site. Build with `npm run build`, then publish `dist/`
+# (Pages Git build, or `npx wrangler pages deploy dist`). Custom domains can be
+# attached via an external DNS CNAME/ALIAS, so the zone need not be on Cloudflare.

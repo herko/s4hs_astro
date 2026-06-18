@@ -42,31 +42,34 @@ All commands are run from the root of the project, from a terminal:
 
 Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
 
-## Deployment (Cloudflare)
+## Deployment (Cloudflare Pages)
 
-This is a fully static site (no Worker script). `wrangler.toml` deploys the
-built `dist/` directory as **Workers Assets** (`[assets] directory = "./dist"`),
-so a plain `wrangler deploy` works.
+Fully static site deployed as **Cloudflare Pages**. Pages supports custom
+domains via an external DNS CNAME/ALIAS, so the domain's nameservers can stay
+at the current provider (e.g. websupport.sk).
 
-### CI build settings
+### CI build settings (Pages → Git)
 
-| Setting        | Value                 |
-| :------------- | :-------------------- |
-| Build command  | `npm run build`       |
-| Deploy command | `npx wrangler deploy` |
-| Env vars       | none                  |
+| Setting                 | Value           |
+| :---------------------- | :-------------- |
+| Build command           | `npm run build` |
+| Build output directory  | `dist`          |
+| Framework preset        | Astro           |
+| Env vars                | none            |
 
-The build must run before deploy so `dist/` exists; `wrangler deploy` then
-uploads it (no entry-point/Worker script needed for an assets-only project).
-
-### Local / first-time deploy
+### Local / manual deploy
 
 ```bash
 npm run build
-npx wrangler login   # once
-npx wrangler deploy
+npx wrangler login            # once
+npx wrangler pages deploy dist
 ```
 
-After the first successful deploy, add the custom domain `s4hs.sk` in the
-Cloudflare dashboard (the project's **Domains & Routes**) and follow the DNS
-instructions. No environment variables are required.
+### Custom domain (external DNS, no nameserver change)
+
+1. In the Pages project → **Custom domains** → add `s4hs.sk` and `www.s4hs.sk`.
+   Note the assigned `<project>.pages.dev` target.
+2. At the DNS provider (websupport.sk):
+   - `ALIAS`/`ANAME` record: host `@` → `<project>.pages.dev`
+   - `CNAME` record: host `www` → `<project>.pages.dev`
+3. Cloudflare validates the records and issues SSL automatically.
