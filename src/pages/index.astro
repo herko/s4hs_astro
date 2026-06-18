@@ -11,7 +11,11 @@ const heroImages = Object.values(
   import.meta.glob("../assets/static/hero/*.jpg", { eager: true, import: "default" })
 );
 const posts = (await getCollection("posts")).sort((a, b) => +b.data.publishedAt - +a.data.publishedAt).slice(0, 5);
-const postsWithAuthors = await Promise.all(posts.map(async (post) => ({ post, author: await getEntry(post.data.author) })));
+const postsWithAuthors = await Promise.all(posts.map(async (post) => {
+  const author = await getEntry(post.data.author);
+  if (!author) throw new Error(`Missing author for post ${post.id}`);
+  return { post, author };
+}));
 const publications = (await getCollection("publications")).sort((a, b) => +b.data.createdAt - +a.data.createdAt).slice(0, 8);
 const authors = (await getCollection("authors")).sort((a, b) => a.data.lastName.localeCompare(b.data.lastName, "sk"));
 ---

@@ -3,7 +3,11 @@ import { getCollection, getEntry } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import PostCard from "../../components/PostCard.astro";
 const posts = (await getCollection("posts")).sort((a, b) => +b.data.publishedAt - +a.data.publishedAt);
-const withAuthors = await Promise.all(posts.map(async (post) => ({ post, author: await getEntry(post.data.author) })));
+const withAuthors = await Promise.all(posts.map(async (post) => {
+  const author = await getEntry(post.data.author);
+  if (!author) throw new Error(`Missing author for post ${post.id}`);
+  return { post, author };
+}));
 ---
 <Layout title="Články — S4HS">
   <section class="container" style="padding-block: var(--space-5)">
