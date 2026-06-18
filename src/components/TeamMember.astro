@@ -2,24 +2,14 @@
 import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 import { fullNameWithTitles } from "../lib/names";
+import { excerpt } from "../lib/excerpt";
 import Icon from "./Icon.astro";
 import noAvatar from "../assets/static/no-avatar.svg";
 
 interface Props { author: CollectionEntry<"authors"> }
 const { author } = Astro.props;
 const name = fullNameWithTitles(author.data);
-
-// Plain-text excerpt of the Markdown bio (mirrors the legacy `truncate(bio, 300)`).
-function excerpt(md: string, len = 300): string {
-  const text = (md ?? "")
-    .replace(/!\[[^\]]*\]\([^)]*\)/g, "")
-    .replace(/\[([^\]]*)\]\([^)]*\)/g, "$1")
-    .replace(/[#*_>`~]/g, "")
-    .replace(/\s+/g, " ")
-    .trim();
-  return text.length <= len ? text : text.slice(0, len).replace(/\s+\S*$/, "") + " …";
-}
-const bio = excerpt(author.body ?? "");
+const bio = excerpt(author.body ?? "", 300);
 ---
 <article class="member">
   <div class="text">

@@ -6,13 +6,33 @@ const authors = (await getCollection("authors"))
   .sort((a, b) => a.data.lastName.localeCompare(b.data.lastName, "sk"));
 ---
 <Layout title="Autori — S4HS">
-  <section class="container" style="padding-block: var(--space-5)">
-    <h1>Autori</h1>
+  <section class="hero">
+    <div class="container">
+      <h1>Autori</h1>
+      <p>
+        Ako mladí vedci <strong>chceme napomáhať k rozvoju pôvodnej odbornej tvorby</strong>
+        prostredníctvom vytvárania podmienok na publikovanie vedeckých a popularizačných knižných výstupov.
+      </p>
+    </div>
+  </section>
+  <section class="container authors-section">
     <div class="grid">
       {authors.map((author) => <AuthorCard author={author} />)}
     </div>
   </section>
 </Layout>
 <style>
-  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: var(--space-4); margin-top: var(--space-3); }
+  .hero { background: var(--color-bg-light); padding-block: var(--space-5); text-align: center; }
+  .hero h1 { font-size: clamp(2.5rem, 5vw, 3.5rem); font-weight: var(--weight-semibold); }
+  .hero p { max-width: 60ch; margin: var(--space-2) auto 0; font-size: 1.15rem; color: var(--color-muted); }
+  .authors-section { padding-block: var(--space-5); }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-4);
+    max-width: 980px;
+    margin-inline: auto;
+  }
+  @media (max-width: 900px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 575px) { .grid { grid-template-columns: 1fr; max-width: 360px; } }
 </style>

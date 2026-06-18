@@ -2,18 +2,46 @@
 import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 import { fullNameWithTitles } from "../lib/names";
+import { excerpt } from "../lib/excerpt";
 import noAvatar from "../assets/static/no-avatar.svg";
+
 interface Props { author: CollectionEntry<"authors"> }
 const { author } = Astro.props;
 const name = fullNameWithTitles(author.data);
+const bio = excerpt(author.body ?? "", 100);
 ---
-<a class="card" href={`/autori/${author.id}`}>
-  <Image class="avatar" src={author.data.avatar ?? noAvatar} alt={name} width={120} height={120} />
-  <span class="name">{name}</span>
-</a>
+<div class="author">
+  <Image class="photo" src={author.data.avatar ?? noAvatar} alt={name} width={333} height={500} />
+  <div class="info">
+    <h3>{name}</h3>
+    <p>{bio}</p>
+  </div>
+  <a class="profile" href={`/autori/${author.id}`}>Zobraziť profil</a>
+</div>
 <style>
-  .card { display: flex; flex-direction: column; align-items: center; gap: var(--space-1); text-align: center; color: var(--color-text); }
-  .avatar { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; }
-  .name { font-weight: var(--weight-medium); }
-  .card:hover .name { color: var(--color-primary); }
+  .author { display: flex; flex-direction: column; align-items: center; }
+  .photo { width: 100%; height: auto; border-radius: var(--radius); display: block; }
+  .info {
+    position: relative;
+    z-index: 1;
+    margin-top: -3rem;            /* overlap the bottom of the photo (legacy mt-n6) */
+    margin-inline: var(--space-2);
+    padding: var(--space-3);
+    background: var(--color-bg);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-soft);
+    text-align: center;
+  }
+  .info h3 { font-size: 1rem; font-weight: var(--weight-medium); margin: 0 0 var(--space-1); }
+  .info p { font-size: 0.9rem; color: var(--color-muted); margin: 0; }
+  .profile {
+    margin-top: var(--space-3);
+    display: inline-block;
+    padding: 0.4rem 1.1rem;
+    border: 1px solid var(--color-primary);
+    border-radius: 999px;
+    color: var(--color-primary);
+    font-size: 0.85rem;
+  }
+  .profile:hover { background: var(--color-primary); color: #fff; text-decoration: none; }
 </style>
