@@ -1,0 +1,48 @@
+/* Global theme tokens (values from legacy theme SCSS) + minimal reset.
+   Real hex values sourced from:
+     legacy-s4hs/production/app/assets/stylesheets/theme/bootstrap/_variables.scss
+     legacy-s4hs/production/app/assets/stylesheets/theme/_user-variables.scss
+   Notes:
+   - $primary maps to $blue (#007bff); $primary in _user-variables.scss has $red commented out
+   - $primary-darker is $red (#dc3545) — used as --color-primary-dark
+   - $warning maps to $yellow (#ffc107)
+   - $body-color maps to $gray-900 (#212529)
+   - $text-muted (#8c98a4) and $bg-light (#f8fafd) and $border (#e7eaf3) are "Front" template defaults not overridden
+*/
+:root {
+  --color-primary: #007bff;        /* $primary = $blue */
+  --color-primary-dark: #dc3545;   /* $primary-darker = $red */
+  --color-warning: #ffc107;        /* $warning = $yellow */
+  --color-text: #212529;           /* $body-color = $gray-900 */
+  --color-muted: #8c98a4;          /* $text-muted — Front template default, not in grep output */
+  --color-bg: #ffffff;
+  --color-bg-light: #f8fafd;       /* .bg-light — Front template default, not in grep output */
+  --color-border: #e7eaf3;         /* Front template default, not in grep output */
+
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  --font-size-base: 1rem;
+  --line-height-base: 1.6;
+  --h1: 2.5rem; --h2: 2rem; --h3: 1.75rem; --h4: 1.5rem; --h5: 1.25rem;
+  --weight-medium: 500; --weight-semibold: 600; --weight-bold: 700;
+
+  --container: 1140px;
+  --space-1: 0.5rem; --space-2: 1rem; --space-3: 2rem; --space-4: 4rem; --space-5: 6rem;
+  --radius: 0.5rem;
+  --shadow-soft: 0 0 35px rgba(140, 152, 164, 0.125);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+  color: var(--color-text);
+  background: var(--color-bg);
+}
+img { max-width: 100%; height: auto; }
+a { color: var(--color-primary); text-decoration: none; }
+a:hover { text-decoration: underline; }
+h1, h2, h3, h4, h5 { font-weight: var(--weight-medium); line-height: 1.2; margin: 0 0 var(--space-2); }
+.container { max-width: var(--container); margin-inline: auto; padding-inline: var(--space-2); }
