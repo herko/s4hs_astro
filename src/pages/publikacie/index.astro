@@ -1,15 +1,23 @@
 ---
 import { getCollection } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
-import PublicationCard from "../../components/PublicationCard.astro";
+import PublicationListItem from "../../components/PublicationListItem.astro";
 const publications = (await getCollection("publications")).sort((a, b) => +b.data.createdAt - +a.data.createdAt);
 ---
 <Layout title="Publikácie — S4HS">
-  <section class="container" style="padding-block: var(--space-5)">
-    <h1>Publikácie</h1>
-    <div class="grid">{publications.map((publication) => <PublicationCard publication={publication} />)}</div>
+  <section class="hero">
+    <div class="container">
+      <h1>Publikácie</h1>
+      <p>Najčastejším výstupom činnosti nášho združenia sú publikácie. Toto je prehľad našich doteraz vydaných publikácií.</p>
+    </div>
+  </section>
+  <section class="container list">
+    {publications.map((publication) => <PublicationListItem publication={publication} />)}
   </section>
 </Layout>
 <style>
-  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: var(--space-4); margin-top: var(--space-3); }
+  .hero { background: var(--color-bg-light); padding-block: var(--space-5); text-align: center; }
+  .hero h1 { font-size: clamp(2.5rem, 5vw, 3.5rem); font-weight: var(--weight-semibold); }
+  .hero p { max-width: 60ch; margin: var(--space-2) auto 0; font-size: 1.15rem; color: var(--color-muted); }
+  .list { max-width: 720px; padding-block: var(--space-5); }
 </style>
