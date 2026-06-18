@@ -1,2 +1,7 @@
 name = "s4hs"
-pages_build_output_dir = "dist"
+compatibility_date = "2026-06-18"
+
+# Static site (no Worker script) — deploy the built `dist/` as Workers Assets.
+# Build first (`npm run build`), then `wrangler deploy`.
+[assets]
+directory = "./dist"

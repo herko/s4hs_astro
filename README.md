@@ -42,22 +42,31 @@ All commands are run from the root of the project, from a terminal:
 
 Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
 
-## Deployment (Cloudflare Pages)
+## Deployment (Cloudflare)
 
-### Automatic (CI) — after first manual setup
+This is a fully static site (no Worker script). `wrangler.toml` deploys the
+built `dist/` directory as **Workers Assets** (`[assets] directory = "./dist"`),
+so a plain `wrangler deploy` works.
 
-| Setting          | Value         |
-| :--------------- | :------------ |
-| Build command    | `npm run build` |
-| Output directory | `dist`        |
-| Framework preset | Astro         |
-| Environment vars | none          |
+### CI build settings
 
-### First-time manual setup
+| Setting        | Value                 |
+| :------------- | :-------------------- |
+| Build command  | `npm run build`       |
+| Deploy command | `npx wrangler deploy` |
+| Env vars       | none                  |
 
-1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), create a new **Pages** project connected to this Git repository.
-2. Set the build command to `npm run build` and the output directory to `dist`. Choose the **Astro** framework preset.
-3. Click **Save and Deploy**. Cloudflare Pages will build and publish the site.
-4. After the first successful deploy, add the custom domain `s4hs.sk` under the Pages project's **Custom domains** tab and follow the DNS instructions.
+The build must run before deploy so `dist/` exists; `wrangler deploy` then
+uploads it (no entry-point/Worker script needed for an assets-only project).
 
-No environment variables are required for the static build.
+### Local / first-time deploy
+
+```bash
+npm run build
+npx wrangler login   # once
+npx wrangler deploy
+```
+
+After the first successful deploy, add the custom domain `s4hs.sk` in the
+Cloudflare dashboard (the project's **Domains & Routes**) and follow the DNS
+instructions. No environment variables are required.
