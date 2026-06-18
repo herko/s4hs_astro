@@ -1,0 +1,17 @@
+---
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+import noImage from "../assets/static/no-image.svg";
+interface Props { publication: CollectionEntry<"publications"> }
+const { publication } = Astro.props;
+---
+<a class="card" href={`/publikacie/${publication.id}`}>
+  <Image class="cover" src={publication.data.image ?? noImage} alt={publication.data.title} width={500} height={700} />
+  <h3>{publication.data.title}</h3>
+</a>
+<style>
+  .card { display: block; color: var(--color-text); }
+  .cover { width: 100%; aspect-ratio: 5/7; object-fit: cover; border-radius: var(--radius); box-shadow: var(--shadow-soft); }
+  .card h3 { margin: var(--space-2) 0 0; font-size: var(--h5); }
+  .card:hover h3 { color: var(--color-primary); }
+</style>

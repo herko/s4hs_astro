@@ -1,0 +1,15 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import PublicationCard from "../../components/PublicationCard.astro";
+const publications = (await getCollection("publications")).sort((a, b) => +b.data.createdAt - +a.data.createdAt);
+---
+<Layout title="Publikácie — S4HS">
+  <section class="container" style="padding-block: var(--space-5)">
+    <h1>Publikácie</h1>
+    <div class="grid">{publications.map((publication) => <PublicationCard publication={publication} />)}</div>
+  </section>
+</Layout>
+<style>
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: var(--space-4); margin-top: var(--space-3); }
+</style>
