@@ -21,6 +21,7 @@ const { email, website, facebook, linkedin } = author.data;
   </section>
 
   <section class="container profile">
+    <a class="back-top" href="/autori"><Icon name="arrow-left" size={16} /> Späť na autorov</a>
     <Image class="photo" src={author.data.avatar ?? noAvatar} alt={name} width={400} height={600} />
     <div class="content">
       <div class="contacts">
@@ -51,6 +52,8 @@ const { email, website, facebook, linkedin } = author.data;
     max-width: 980px;
   }
   .photo { width: 100%; height: auto; border-radius: var(--radius); box-shadow: var(--shadow-soft); }
+  .back-top { grid-column: 1 / -1; display: inline-flex; align-items: center; gap: 6px; color: var(--color-muted); justify-self: start; }
+  .back-top:hover { color: var(--color-primary); text-decoration: none; }
 
   .contacts { display: inline-flex; border: 1px solid var(--color-border); border-radius: var(--radius); overflow: hidden; }
   .seg {
