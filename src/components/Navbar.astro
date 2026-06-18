@@ -23,6 +23,10 @@ const path = Astro.url.pathname;
 <style>
   .header { position: sticky; top: 0; background: rgba(255,255,255,.9); backdrop-filter: blur(6px); z-index: 10; border-bottom: 1px solid var(--color-border); }
   .bar { display: flex; align-items: center; justify-content: space-between; padding-block: var(--space-2); }
+  .brand { display: inline-flex; }
+  /* Override the global `img { height: auto }` reset, which otherwise collapses the
+     percentage-sized SVG logo to zero height. */
+  .brand img { height: 40px; width: auto; }
   .nav { display: flex; gap: var(--space-3); }
   .navlink { color: var(--color-text); font-weight: var(--weight-medium); }
   .navlink.active, .navlink:hover { color: var(--color-primary); text-decoration: none; }
