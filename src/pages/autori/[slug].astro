@@ -1,0 +1,49 @@
+---
+import { getCollection, render } from "astro:content";
+import { Image } from "astro:assets";
+import Layout from "../../layouts/Layout.astro";
+import Icon from "../../components/Icon.astro";
+import PostCard from "../../components/PostCard.astro";
+import { fullNameWithTitles } from "../../lib/names";
+import noAvatar from "../../assets/static/no-avatar.svg";
+
+export async function getStaticPaths() {
+  const authors = await getCollection("authors");
+  return authors.map((author) => ({ params: { slug: author.id }, props: { author } }));
+}
+const { author } = Astro.props;
+const { Content } = await render(author);
+const name = fullNameWithTitles(author.data);
+const posts = (await getCollection("posts"))
+  .filter((p) => p.data.author.id === author.id)
+  .sort((a, b) => +b.data.publishedAt - +a.data.publishedAt);
+const { website, facebook, linkedin } = author.data;
+---
+<Layout title={`${name} — S4HS`}>
+  <section class="container" style="padding-block: var(--space-5); max-width: 760px">
+    <div class="head">
+      <Image class="avatar" src={author.data.avatar ?? noAvatar} alt={name} width={140} height={140} />
+      <div>
+        <h1>{name}</h1>
+        <div class="social">
+          {website && <a href={website} aria-label="Web"><Icon name="link" /></a>}
+          {facebook && <a href={facebook} aria-label="Facebook"><Icon name="facebook" /></a>}
+          {linkedin && <a href={linkedin} aria-label="LinkedIn"><Icon name="linkedin" /></a>}
+        </div>
+      </div>
+    </div>
+    <div class="prose"><Content /></div>
+    {posts.length > 0 && (
+      <>
+        <h2 style="margin-top: var(--space-4)">Články autora</h2>
+        <div class="posts">{posts.map((post) => <PostCard post={post} author={author} />)}</div>
+      </>
+    )}
+  </section>
+</Layout>
+<style>
+  .head { display: flex; gap: var(--space-3); align-items: center; margin-bottom: var(--space-3); }
+  .avatar { width: 140px; height: 140px; border-radius: 50%; object-fit: cover; }
+  .social { display: flex; gap: var(--space-2); margin-top: var(--space-1); }
+  .posts { display: grid; gap: var(--space-3); margin-top: var(--space-2); }
+</style>

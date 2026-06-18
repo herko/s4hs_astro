@@ -1,0 +1,18 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import AuthorCard from "../../components/AuthorCard.astro";
+const authors = (await getCollection("authors"))
+  .sort((a, b) => a.data.lastName.localeCompare(b.data.lastName, "sk"));
+---
+<Layout title="Autori — S4HS">
+  <section class="container" style="padding-block: var(--space-5)">
+    <h1>Autori</h1>
+    <div class="grid">
+      {authors.map((author) => <AuthorCard author={author} />)}
+    </div>
+  </section>
+</Layout>
+<style>
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: var(--space-4); margin-top: var(--space-3); }
+</style>
