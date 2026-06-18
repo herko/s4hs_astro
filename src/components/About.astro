@@ -60,6 +60,9 @@ const steps = [
 </div></section>
 
 <style>
+  /* `.section` is scoped to index.astro and doesn't reach this component,
+     so define the vertical rhythm here. */
+  .section { padding-block: var(--space-5); }
   .title { font-weight: var(--weight-medium); }
   .title strong { font-weight: var(--weight-semibold); }
   .goals { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); }
