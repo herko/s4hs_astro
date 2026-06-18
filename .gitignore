@@ -22,3 +22,6 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# legacy Rails app copy — contains production secrets (master.key, DB creds, AWS keys)
+legacy-s4hs/
