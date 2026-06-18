@@ -1,23 +1,28 @@
 /* Global theme tokens (values from legacy theme SCSS) + minimal reset.
    Real hex values sourced from:
      legacy-s4hs/production/app/assets/stylesheets/theme/bootstrap/_variables.scss
+     legacy-s4hs/production/app/assets/stylesheets/theme/front/_variables.scss
      legacy-s4hs/production/app/assets/stylesheets/theme/_user-variables.scss
    Notes:
    - $primary maps to $blue (#007bff); $primary in _user-variables.scss has $red commented out
-   - $primary-darker is $red (#dc3545) — used as --color-primary-dark
+   - $primary-darker = $red in _user-variables.scss is an orphaned override; --color-primary-dark
+     uses Bootstrap 4's darkened-primary active/hover shade for $primary (#007bff), not $primary-darker
    - $warning maps to $yellow (#ffc107)
    - $body-color maps to $gray-900 (#212529)
-   - $text-muted (#8c98a4) and $bg-light (#f8fafd) and $border (#e7eaf3) are "Front" template defaults not overridden
+   - Front overrides $gray-300 → #e7eaf3 and $gray-600 → #8c98a4
+   - $text-muted = $gray-600; Front's $gray-600 = #8c98a4
+   - $border-color = $gray-300; Front's $gray-300 = #e7eaf3
+   - $gray-100 (bg-light) is not overridden by Front; Bootstrap default = #f8f9fa
 */
 :root {
   --color-primary: #007bff;        /* $primary = $blue */
-  --color-primary-dark: #dc3545;   /* $primary-darker = $red */
+  --color-primary-dark: #0062cc;   /* darkened primary active/hover shade for $primary (#007bff); NOT $primary-darker */
   --color-warning: #ffc107;        /* $warning = $yellow */
   --color-text: #212529;           /* $body-color = $gray-900 */
-  --color-muted: #8c98a4;          /* $text-muted — Front template default, not in grep output */
+  --color-muted: #8c98a4;          /* $text-muted = $gray-600; Front front/_variables.scss: $gray-600: #8c98a4 */
   --color-bg: #ffffff;
-  --color-bg-light: #f8fafd;       /* .bg-light — Front template default, not in grep output */
-  --color-border: #e7eaf3;         /* Front template default, not in grep output */
+  --color-bg-light: #f8f9fa;       /* $gray-100 (Bootstrap bootstrap/_variables.scss: $gray-100: #f8f9fa) */
+  --color-border: #e7eaf3;         /* $border-color = $gray-300; Front front/_variables.scss: $gray-300: #e7eaf3 */
 
   --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     "Helvetica Neue", Arial, "Noto Sans", sans-serif;
