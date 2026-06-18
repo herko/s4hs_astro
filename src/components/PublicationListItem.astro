@@ -7,43 +7,40 @@ import noImage from "../assets/static/no-image.svg";
 
 interface Props { publication: CollectionEntry<"publications"> }
 const { publication } = Astro.props;
-const description = excerpt(publication.data.shortDescription, 200);
+const description = excerpt(publication.data.shortDescription, 150);
 ---
-<article class="pub">
-  <a href={`/publikacie/${publication.id}`} class="cover">
-    <Image src={publication.data.image ?? noImage} alt={publication.data.title} width={500} height={700} />
-  </a>
+<a class="pub" href={`/publikacie/${publication.id}`}>
+  <Image class="cover" src={publication.data.image ?? noImage} alt={publication.data.title} width={240} height={336} />
   <div class="body">
-    <h2><a href={`/publikacie/${publication.id}`}>{publication.data.title}</a></h2>
+    <h2>{publication.data.title}</h2>
     <p>{description}</p>
-    <div class="more">
-      <a class="btn" href={`/publikacie/${publication.id}`}>Viac informácií <Icon name="arrow-right" size={16} /></a>
-    </div>
+    <span class="more">Viac informácií <Icon name="arrow-right" size={14} /></span>
   </div>
-</article>
+</a>
 <style>
-  .pub { margin-bottom: var(--space-5); }
-  .cover { display: block; }
-  .cover :global(img) {
-    display: block;
-    margin-inline: auto;
-    width: auto;
-    max-width: 100%;
-    max-height: 460px;
+  .pub {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: var(--space-3);
+    align-items: start;
+    padding: var(--space-3);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
     border-radius: var(--radius);
-    box-shadow: var(--shadow-soft);
+    color: var(--color-text);
+    height: 100%;
   }
-  .body { padding-inline: var(--space-2); margin-top: var(--space-3); text-align: center; }
-  .pub h2 { font-size: var(--h4); margin: 0 0 var(--space-1); }
-  .pub h2 a { color: var(--color-text); }
-  .pub h2 a:hover { color: var(--color-primary); text-decoration: none; }
-  .body p { margin: 0 auto; max-width: 60ch; color: var(--color-text); }
-  .more { margin-top: var(--space-2); }
-  .btn {
-    display: inline-flex; align-items: center; gap: 6px;
-    padding: 0.4rem 1.1rem;
-    border: 1px solid var(--color-primary); border-radius: 999px;
-    color: var(--color-primary); font-size: 0.85rem;
+  .pub:hover { box-shadow: var(--shadow-soft); text-decoration: none; }
+  .cover {
+    width: 110px;
+    height: auto;
+    max-height: 165px;
+    object-fit: cover;
+    border-radius: calc(var(--radius) / 1.5);
   }
-  .btn:hover { background: var(--color-primary); color: #fff; text-decoration: none; }
+  .body { min-width: 0; }
+  .body h2 { font-size: 1.05rem; margin: 0 0 var(--space-1); }
+  .pub:hover h2 { color: var(--color-primary); }
+  .body p { margin: 0 0 var(--space-2); font-size: 0.9rem; color: var(--color-muted); }
+  .more { display: inline-flex; align-items: center; gap: 4px; color: var(--color-primary); font-size: 0.85rem; }
 </style>

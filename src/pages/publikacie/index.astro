@@ -19,5 +19,12 @@ const publications = (await getCollection("publications")).sort((a, b) => +b.dat
   .hero { background: var(--color-bg-light); padding-block: var(--space-5); text-align: center; }
   .hero h1 { font-size: clamp(2.5rem, 5vw, 3.5rem); font-weight: var(--weight-semibold); }
   .hero p { max-width: 60ch; margin: var(--space-2) auto 0; font-size: 1.15rem; color: var(--color-muted); }
-  .list { max-width: 720px; padding-block: var(--space-5); }
+  .list {
+    max-width: 960px;
+    padding-block: var(--space-5);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-3);
+  }
+  @media (max-width: 700px) { .list { grid-template-columns: 1fr; } }
 </style>
