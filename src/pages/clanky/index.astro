@@ -1,0 +1,21 @@
+---
+import { getCollection, getEntry } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import PostCard from "../../components/PostCard.astro";
+const posts = (await getCollection("posts")).sort((a, b) => +b.data.publishedAt - +a.data.publishedAt);
+const withAuthors = await Promise.all(posts.map(async (post) => ({ post, author: await getEntry(post.data.author) })));
+---
+<Layout title="Články — S4HS">
+  <section class="container" style="padding-block: var(--space-5)">
+    <div style="text-align:center; max-width:640px; margin-inline:auto">
+      <h1>Články</h1>
+      <p>Najnovšie informácie týkajúce sa činností združenia <em>Society for human studies</em></p>
+    </div>
+    <div class="grid">
+      {withAuthors.map(({ post, author }) => <PostCard post={post} author={author} />)}
+    </div>
+  </section>
+</Layout>
+<style>
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: var(--space-4); margin-top: var(--space-4); }
+</style>

@@ -1,0 +1,21 @@
+---
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+import { fullNameWithTitles } from "../lib/names";
+import noImage from "../assets/static/no-image.svg";
+interface Props { post: CollectionEntry<"posts">; author: CollectionEntry<"authors"> }
+const { post, author } = Astro.props;
+const date = post.data.publishedAt.toLocaleDateString("sk-SK", { day: "numeric", month: "long", year: "numeric" });
+---
+<a class="card" href={`/clanky/${post.id}`}>
+  <Image class="cover" src={post.data.image ?? noImage} alt={post.data.title} width={600} height={400} />
+  <h3>{post.data.title}</h3>
+  <p class="meta">{fullNameWithTitles(author.data)} · {date}</p>
+</a>
+<style>
+  .card { display: block; color: var(--color-text); }
+  .cover { width: 100%; aspect-ratio: 3/2; object-fit: cover; border-radius: var(--radius); box-shadow: var(--shadow-soft); }
+  .card h3 { margin: var(--space-2) 0 var(--space-1); font-size: var(--h5); }
+  .meta { color: var(--color-muted); font-size: .9rem; margin: 0; }
+  .card:hover h3 { color: var(--color-primary); }
+</style>
