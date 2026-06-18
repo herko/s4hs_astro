@@ -25,3 +25,6 @@ pnpm-debug.log*
 
 # legacy Rails app copy — contains production secrets (master.key, DB creds, AWS keys)
 legacy-s4hs/
+
+# migration export — contains production data, not for version control
+migration/export.json
