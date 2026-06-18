@@ -1,1 +1,37 @@
-<nav></nav>
+---
+import logo from "../assets/static/s4hs-logo.svg?url";
+const links = [
+  { href: "/", label: "Home" },
+  { href: "/publikacie", label: "Publikácie" },
+  { href: "/autori", label: "Autori" },
+  { href: "/clanky", label: "Články" },
+];
+const path = Astro.url.pathname;
+---
+<header class="header">
+  <div class="container bar">
+    <a href="/" class="brand"><img src={logo} alt="S4HS" height="40" /></a>
+    <input type="checkbox" id="navtoggle" class="navtoggle" />
+    <label for="navtoggle" class="hamburger" aria-label="Menu"><span></span></label>
+    <nav class="nav">
+      {links.map((l) => (
+        <a href={l.href} class:list={["navlink", { active: l.href === "/" ? path === "/" : path.startsWith(l.href) }]}>{l.label}</a>
+      ))}
+    </nav>
+  </div>
+</header>
+<style>
+  .header { position: sticky; top: 0; background: rgba(255,255,255,.9); backdrop-filter: blur(6px); z-index: 10; border-bottom: 1px solid var(--color-border); }
+  .bar { display: flex; align-items: center; justify-content: space-between; padding-block: var(--space-2); }
+  .nav { display: flex; gap: var(--space-3); }
+  .navlink { color: var(--color-text); font-weight: var(--weight-medium); }
+  .navlink.active, .navlink:hover { color: var(--color-primary); text-decoration: none; }
+  .navtoggle, .hamburger { display: none; }
+  @media (max-width: 767px) {
+    .hamburger { display: block; cursor: pointer; }
+    .hamburger span, .hamburger span::before, .hamburger span::after { content: ""; display: block; width: 24px; height: 2px; background: var(--color-text); position: relative; }
+    .hamburger span::before { position: absolute; top: -7px; } .hamburger span::after { position: absolute; top: 7px; }
+    .nav { display: none; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; background: #fff; padding: var(--space-2); border-bottom: 1px solid var(--color-border); }
+    .navtoggle:checked ~ .nav { display: flex; }
+  }
+</style>

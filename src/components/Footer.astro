@@ -1,1 +1,11 @@
-<footer></footer>
+---
+const year = new Date().getFullYear();
+---
+<footer class="footer">
+  <div class="container">
+    <p>© {year} Society for human studies</p>
+  </div>
+</footer>
+<style>
+  .footer { border-top: 1px solid var(--color-border); background: var(--color-bg-light); padding-block: var(--space-4); margin-top: var(--space-5); color: var(--color-muted); }
+</style>
