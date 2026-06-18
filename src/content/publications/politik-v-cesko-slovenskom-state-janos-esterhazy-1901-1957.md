@@ -19,4 +19,4 @@ Kniha prináša potrebné nové poznanie o tejto významnej a istým spôsobom k
   
 Publikácia vznikla vďaka finančnej podpore Polska Fundacja Narodowa.  
   
-![logo\_sm.jpg](./images/logo-sm.jpg)
+![logo\_sm.jpg](../../assets/images/publications/logo-sm.jpg)

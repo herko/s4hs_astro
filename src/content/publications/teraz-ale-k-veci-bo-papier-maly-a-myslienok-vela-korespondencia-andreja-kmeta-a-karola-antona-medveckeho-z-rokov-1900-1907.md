@@ -3,7 +3,7 @@ title: "Teraz ale k veci, bo papier malý a myšlienok veľa! Korešpondencia An
 shortDescription: "O čom si dnes píšu ľudia maily a o akých témach chatujú? Komunikácia sa v posledných desaťročiach výrazne zjednodušila a preto aj obsah našich čoraz častejších správ je stále plytší."
 image: "../../assets/images/publications/img-7713-resized.jpg"
 gallery:
-  - "../../assets/images/publications/img-7713-resized.jpg"
+  - "../../assets/images/publications/img-7713-resized-mrldqe.jpg"
   - "../../assets/images/publications/img-7719-resized.jpg"
   - "../../assets/images/publications/img-7720-resized.jpg"
   - "../../assets/images/publications/img-7721-resized.jpg"

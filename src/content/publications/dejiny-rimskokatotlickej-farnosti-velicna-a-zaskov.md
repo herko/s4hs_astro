@@ -3,7 +3,7 @@ title: "Dejiny rímskokatotlíckej farnosti Veličná a Žaškov"
 shortDescription: "Kniha Dejiny rímskokatolíckej farnosti Veličná a Žaškov od historika Petra Olexáka prináša jedinečný a hlboký pohľad na viac ako 700-ročnú históriu jednej z najstarších farností na Orave."
 image: "../../assets/images/publications/img-7732-resized.jpg"
 gallery:
-  - "../../assets/images/publications/img-7732-resized.jpg"
+  - "../../assets/images/publications/img-7732-resized-9keii5.jpg"
   - "../../assets/images/publications/img-7734-resized.jpg"
   - "../../assets/images/publications/img-7735-resized.jpg"
   - "../../assets/images/publications/img-7736-resized.jpg"

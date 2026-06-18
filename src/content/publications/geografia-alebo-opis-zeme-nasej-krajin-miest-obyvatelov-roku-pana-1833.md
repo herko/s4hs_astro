@@ -11,7 +11,7 @@ gallery:
   - "../../assets/images/publications/r3a01776-resized.jpg"
   - "../../assets/images/publications/r3a01784-resized.jpg"
   - "../../assets/images/publications/r3a01785-resized.jpg"
-  - "../../assets/images/publications/r3a01793-resized.jpg"
+  - "../../assets/images/publications/r3a01793-resized-9sby31.jpg"
 createdAt: 2025-10-13T08:23:15.000Z
 ---
 Pred rokmi sa nadšenému historikovi podarilo objaviť v archíve zaprášený zošit, v ktorom boli rukou opísané charakteristiky významných európskych krajín z roku 1833. Išlo o rukopisnú učebnicu Geografie, reflektujúcu aktuálne informácie o šestnástich európskych krajinách. V učebnici neznámy autor opísal pri každej krajine jej prírodné bohatstvo, hospodárstvo, charakteristiky obyvateľstva. Opísal tiež najvýznamnejšie mestá, chrámy, paláce či univerzity. V učebnici bol dokumentovaný vtedajší stav najväčších monarchií ako Veľká Británia, Francúzsko, Prusko, Španielsko, Portugalsko, Dánsko, Švédsko, ale aj dnes už neexistujúce kráľovstvá ako Sardínia, Neapolsko, Bavorsko, Württembersko, Sasko, Nizozemsko, či Hanoversko.  

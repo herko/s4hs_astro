@@ -1,23 +1,47 @@
 import { readFileSync, writeFileSync, mkdirSync, copyFileSync, existsSync, rmSync } from "node:fs";
 import { join } from "node:path";
-import { htmlToMarkdown, replaceEmbeds, sanitizeFilename, frontmatter } from "./lib/transform.mjs";
+import { htmlToMarkdown, sanitizeFilename, frontmatter } from "./lib/transform.mjs";
 
 const BLOBS = "legacy-s4hs/storage/s3";
 const data = JSON.parse(readFileSync("migration/export.json", "utf8"));
 
+// Finding 3: idempotency — remove stale images before regenerating
+rmSync("src/assets/images", { recursive: true, force: true });
+
+const assignedByKey = new Map();   // blob key -> file (relative within collection)
+const usedNames = new Map();       // `${collection}/${file}` -> owning blob key
+
 function copyBlob(ref, collection) {
   if (!ref) return undefined;
-  const file = sanitizeFilename(ref.filename);
+  if (assignedByKey.has(ref.key)) return assignedByKey.get(ref.key);  // same image already copied
+  let file = sanitizeFilename(ref.filename);
+  let candidate = `${collection}/${file}`;
+  if (usedNames.has(candidate) && usedNames.get(candidate) !== ref.key) {
+    const dot = file.lastIndexOf(".");
+    const suffix = ref.key.slice(0, 6);
+    file = dot > 0 ? `${file.slice(0, dot)}-${suffix}${file.slice(dot)}` : `${file}-${suffix}`;
+    candidate = `${collection}/${file}`;
+  }
+  usedNames.set(candidate, ref.key);
+  assignedByKey.set(ref.key, file);
   const destDir = join("src/assets/images", collection);
   mkdirSync(destDir, { recursive: true });
   copyFileSync(join(BLOBS, ref.key), join(destDir, file));
-  return file; // referenced from md as ../../assets/images/<collection>/<file>
+  return file;
 }
 
 function richToMarkdown(rich, collection) {
   if (!rich) return "";
-  for (const e of rich.embeds ?? []) copyBlob(e, collection);
-  return htmlToMarkdown(replaceEmbeds(rich.html, rich.embeds ?? [])).trim();
+  // Finding 2: replace embed tags with correct relative path before turndown
+  let html = rich.html ?? "";
+  let i = 0;
+  html = html.replace(/<action-text-attachment\b[^>]*>(?:<\/action-text-attachment>)?/gi, () => {
+    const e = (rich.embeds ?? [])[i++];
+    if (!e) return "";
+    const file = copyBlob(e, collection);
+    return `<img src="../../assets/images/${collection}/${file}" alt="${e.filename.replace(/"/g, "")}">`;
+  });
+  return htmlToMarkdown(html).trim();
 }
 
 function assetPath(collection, file) {
