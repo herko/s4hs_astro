@@ -4,7 +4,7 @@ import { Image } from "astro:assets";
 import Layout from "../layouts/Layout.astro";
 import Typing from "../components/Typing.astro";
 import PostCard from "../components/PostCard.astro";
-import PublicationCard from "../components/PublicationCard.astro";
+import PublicationCarousel from "../components/PublicationCarousel.astro";
 import TeamCarousel from "../components/TeamCarousel.astro";
 import About from "../components/About.astro";
 
@@ -17,7 +17,7 @@ const postsWithAuthors = await Promise.all(posts.map(async (post) => {
   if (!author) throw new Error(`Missing author for post ${post.id}`);
   return { post, author };
 }));
-const publications = (await getCollection("publications")).sort((a, b) => +b.data.createdAt - +a.data.createdAt).slice(0, 8);
+const publications = (await getCollection("publications")).sort((a, b) => +b.data.createdAt - +a.data.createdAt);
 const authors = (await getCollection("authors")).sort((a, b) => a.data.lastName.localeCompare(b.data.lastName, "sk"));
 ---
 <Layout title="Society for human studies">
@@ -32,8 +32,14 @@ const authors = (await getCollection("authors")).sort((a, b) => a.data.lastName.
   </section>
 
   <section class="bg"><div class="container section">
-    <h2>Publikácie</h2>
-    <div class="grid grid-pubs">{publications.map((publication) => <PublicationCard publication={publication} />)}</div>
+    <div class="pubs-head">
+      <div>
+        <h2>Naše <strong>najnovšie publikácie</strong></h2>
+        <p>Výsledkom našej činnosti je súbor publikácií - monografie, ...</p>
+      </div>
+      <a class="all-link" href="/publikacie">Všetky publikácie →</a>
+    </div>
+    <PublicationCarousel publications={publications} />
   </div></section>
 
   <About />
@@ -60,7 +66,18 @@ const authors = (await getCollection("authors")).sort((a, b) => a.data.lastName.
   .bg { background: var(--color-bg-light); }
   .grid { display: grid; gap: var(--space-4); margin-top: var(--space-3); }
   .grid-posts { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
-  .grid-pubs { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
   .team-intro { max-width: 70ch; color: var(--color-text); margin: 0 0 var(--space-4); }
-  @media (max-width: 767px) { .hero { grid-template-columns: 1fr; } .hero-gallery { display: none; } }
+  .pubs-head { display: flex; justify-content: space-between; align-items: center; gap: var(--space-3); margin-bottom: var(--space-4); }
+  .pubs-head p { color: var(--color-muted); margin: var(--space-1) 0 0; }
+  .all-link {
+    flex: 0 0 auto;
+    padding: 0.4rem 1.1rem;
+    border: 1px solid var(--color-primary); border-radius: 999px;
+    color: var(--color-primary); font-size: 0.85rem; white-space: nowrap;
+  }
+  .all-link:hover { background: var(--color-primary); color: #fff; text-decoration: none; }
+  @media (max-width: 767px) {
+    .hero { grid-template-columns: 1fr; } .hero-gallery { display: none; }
+    .pubs-head { flex-direction: column; align-items: flex-start; }
+  }
 </style>

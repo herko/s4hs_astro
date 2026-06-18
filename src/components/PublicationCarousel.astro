@@ -1,0 +1,48 @@
+---
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+import { excerpt } from "../lib/excerpt";
+import noImage from "../assets/static/no-image.svg";
+
+interface Props { publications: CollectionEntry<"publications">[] }
+const { publications } = Astro.props;
+---
+<div class="carousel pubs" data-carousel>
+  <div class="track" data-track>
+    {publications.map((p) => (
+      <div class="slide">
+        <a class="card" href={`/publikacie/${p.id}`}>
+          <Image class="cover" src={p.data.image ?? noImage} alt={p.data.title} width={400} />
+          <div class="card-body">
+            <h3>{p.data.title}</h3>
+            <small>{excerpt(p.data.shortDescription, 100)}</small>
+          </div>
+        </a>
+      </div>
+    ))}
+  </div>
+  <div class="dots" data-dots aria-label="Navigácia"></div>
+</div>
+<style>
+  .pubs { --per: 4; }
+  @media (max-width: 1100px) { .pubs { --per: 3; } }
+  @media (max-width: 768px) { .pubs { --per: 2; } }
+  @media (max-width: 554px) { .pubs { --per: 1; } }
+
+  .card {
+    display: block;
+    height: 100%;
+    background: var(--color-bg);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-soft);
+    overflow: hidden;
+    color: var(--color-text);
+  }
+  .card:hover { text-decoration: none; }
+  .cover { width: 100%; height: auto; aspect-ratio: 400 / 280; object-fit: cover; display: block; }
+  .card-body { padding: var(--space-2); }
+  .card-body h3 { font-size: 1rem; font-weight: var(--weight-bold); margin: 0 0 var(--space-1); color: var(--color-text); }
+  .card-body small { color: var(--color-muted); }
+  .card:hover h3 { color: var(--color-primary); }
+</style>
+<script>import "../scripts/carousel.js";</script>
