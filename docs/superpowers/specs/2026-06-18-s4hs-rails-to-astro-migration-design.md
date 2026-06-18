@@ -102,9 +102,12 @@ Only read access; nothing on the server is modified. `export.json` is downloaded
 
 - **authors**: `firstName`, `lastName`, `middleName?`, `titleBefore?`, `titleAfter?`, `website?`,
   `facebook?`, `linkedin?`, `avatar` (image), `slug`. Body = bio (Markdown).
-- **posts**: `title`, `slug`, `author` (reference → authors by slug), `status`, `publishedAt` (date),
+- **posts**: `title`, `slug`, `author` (reference → authors by slug), `publishedAt` (date),
   `description` (Markdown string, lead), `image` (cover image). Body = content (Markdown).
-  Only `status == "published"` rendered (mirror the Rails controller scope).
+  ALL posts are rendered. (Resolved during implementation: the legacy `PostsController` applies
+  no `status` scope and the `Post` model has no `published` concept — `posts.status` is an orphaned,
+  unused column — so the faithful replica renders every post. The earlier "only published" line was
+  a wrong assumption; `status` is therefore not migrated.)
 - **publications**: `title`, `slug`, `shortDescription` (Markdown string), `image` (cover),
   `gallery` (array of images). Body = longDescription (Markdown).
 
@@ -114,7 +117,7 @@ Images use the `image()` helper in the collection schema so `astro:assets` optim
 
 - **`/` home**: Hero (with a typing effect re-implemented in small vanilla JS, replacing typed.js),
   About section, latest posts preview, publications preview, team (authors).
-- **`/clanky`**: list of published posts (PostCard grid). **`/clanky/[slug]`**: post — title, author
+- **`/clanky`**: list of all posts (PostCard grid). **`/clanky/[slug]`**: post — title, author
   byline + avatar + date, lead, cover image, body, author footer, back link.
 - **`/autori`**: author grid. **`/autori/[slug]`**: author profile (avatar, titles, bio, social links)
   + that author's posts.
@@ -149,7 +152,7 @@ No environment variables or server runtime required. Custom domain pointed at Pa
   Rails boots there (`credentials:show` worked). The export must not touch the DB writably.
 - **Trix → Markdown fidelity**: unusual inline formatting may need manual touch-up post-conversion;
   acceptable per "minor improvements".
-- **`posts.status` enum mapping**: confirm the integer→symbol mapping (0 = draft? published?) from the
-  Post model / controller before filtering. Only published posts are published to the static site.
+- **`posts.status`**: RESOLVED — the legacy `PostsController` has no status scope and the `Post` model
+  has no `published` concept; `status` is an unused column. All posts are rendered; `status` is not migrated.
 - **Inline images inside rich text** (vs. dedicated `image`/`gallery_images` attachments): both handled
   by the blob key→file copy step.
