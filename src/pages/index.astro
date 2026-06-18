@@ -5,7 +5,7 @@ import Layout from "../layouts/Layout.astro";
 import Typing from "../components/Typing.astro";
 import PostCard from "../components/PostCard.astro";
 import PublicationCard from "../components/PublicationCard.astro";
-import AuthorCard from "../components/AuthorCard.astro";
+import TeamCarousel from "../components/TeamCarousel.astro";
 
 const heroImages = Object.values(
   import.meta.glob("../assets/static/hero/*.jpg", { eager: true, import: "default" })
@@ -40,10 +40,13 @@ const authors = (await getCollection("authors")).sort((a, b) => a.data.lastName.
     <div class="grid grid-pubs">{publications.map((publication) => <PublicationCard publication={publication} />)}</div>
   </div></section>
 
-  <section class="container section">
-    <h2>Náš tím</h2>
-    <div class="grid grid-team">{authors.map((author) => <AuthorCard author={author} />)}</div>
-  </section>
+  <section class="bg"><div class="container section">
+    <h2>Náš <strong>tím</strong></h2>
+    <p class="team-intro">
+      Ako mladí vedci chcem aj prostredníctvom činnosti združenia <em>Society for human studies - spoločnosť pre výskum človeka</em> napomáhať k rozvoju pôvodnej odbornej tvorby prostredníctvom vytvárania podmienok na publikovanie vedeckých a popularizačných knižných výstupov, v ktorých chceme dávať priestor najmä mladým autorom.
+    </p>
+    <TeamCarousel authors={authors} />
+  </div></section>
 </Layout>
 <style>
   .hero { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); align-items: center; padding-block: var(--space-5); }
@@ -55,6 +58,6 @@ const authors = (await getCollection("authors")).sort((a, b) => a.data.lastName.
   .grid { display: grid; gap: var(--space-4); margin-top: var(--space-3); }
   .grid-posts { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
   .grid-pubs { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
-  .grid-team { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+  .team-intro { max-width: 70ch; color: var(--color-text); margin: 0 0 var(--space-4); }
   @media (max-width: 767px) { .hero { grid-template-columns: 1fr; } .hero-gallery { display: none; } }
 </style>
