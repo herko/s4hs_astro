@@ -1,7 +1,7 @@
 ---
 import { getCollection, getEntry } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
-import PostCard from "../../components/PostCard.astro";
+import PostListItem from "../../components/PostListItem.astro";
 const posts = (await getCollection("posts")).sort((a, b) => +b.data.publishedAt - +a.data.publishedAt);
 const withAuthors = await Promise.all(posts.map(async (post) => {
   const author = await getEntry(post.data.author);
@@ -10,16 +10,19 @@ const withAuthors = await Promise.all(posts.map(async (post) => {
 }));
 ---
 <Layout title="Články — S4HS">
-  <section class="container" style="padding-block: var(--space-5)">
-    <div style="text-align:center; max-width:640px; margin-inline:auto">
+  <section class="hero">
+    <div class="container">
       <h1>Články</h1>
       <p>Najnovšie informácie týkajúce sa činností združenia <em>Society for human studies</em></p>
     </div>
-    <div class="grid">
-      {withAuthors.map(({ post, author }) => <PostCard post={post} author={author} />)}
-    </div>
+  </section>
+  <section class="container list">
+    {withAuthors.map(({ post, author }) => <PostListItem post={post} author={author} />)}
   </section>
 </Layout>
 <style>
-  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: var(--space-4); margin-top: var(--space-4); }
+  .hero { background: var(--color-bg-light); padding-block: var(--space-5); text-align: center; }
+  .hero h1 { font-size: clamp(2.5rem, 5vw, 3.5rem); font-weight: var(--weight-semibold); }
+  .hero p { max-width: 60ch; margin: var(--space-2) auto 0; font-size: 1.15rem; color: var(--color-muted); }
+  .list { max-width: 720px; padding-block: var(--space-5); }
 </style>
