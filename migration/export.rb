@@ -21,7 +21,7 @@ data = {
   authors: User.order(:last_name).map do |u|
     {
       slug: u.slug, firstName: u.first_name, middleName: u.middle_name, lastName: u.last_name,
-      titleBefore: u.title_before, titleAfter: u.title_after,
+      titleBefore: u.title_before, titleAfter: u.title_after, email: u.email,
       website: u.website.presence || u.url.presence, facebook: u.facebook, linkedin: u.linkedin,
       createdAt: u.created_at.iso8601, avatar: blob_ref(u.avatar), bio: rich(u.bio)
     }

@@ -10,6 +10,7 @@ const authors = defineCollection({
       middleName: z.string().optional(),
       titleBefore: z.string().optional(),
       titleAfter: z.string().optional(),
+      email: z.string().optional(),
       website: z.string().optional(),
       facebook: z.string().optional(),
       linkedin: z.string().optional(),

@@ -3,6 +3,7 @@ firstName: "Rastislav"
 lastName: "Molda"
 titleBefore: "Mgr."
 titleAfter: "PhD."
+email: "molda@s4hs.sk"
 website: "https://independent.academia.edu/RastislavMolda"
 avatar: "../../assets/images/authors/rastislav-molda.jpg"
 createdAt: 2019-09-24T13:26:19.000Z

@@ -3,6 +3,7 @@ firstName: "Ján"
 lastName: "Golian"
 titleBefore: "Mgr."
 titleAfter: "PhD."
+email: "golian@s4hs.sk"
 website: "https://independent.academia.edu/JanGolian"
 avatar: "../../assets/images/authors/jan-golian.jpg"
 createdAt: 2019-10-05T20:46:39.000Z

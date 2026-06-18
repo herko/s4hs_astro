@@ -59,6 +59,7 @@ for (const a of data.authors) {
   const fm = frontmatter({
     firstName: a.firstName, middleName: a.middleName || undefined, lastName: a.lastName,
     titleBefore: a.titleBefore || undefined, titleAfter: a.titleAfter || undefined,
+    email: a.email || undefined,
     website: a.website || undefined, facebook: a.facebook || undefined, linkedin: a.linkedin || undefined,
     avatar: assetPath("authors", avatar), createdAt: new Date(a.createdAt),
   });

@@ -3,6 +3,7 @@ firstName: "Erika"
 lastName: "Maliniaková"
 titleBefore: "Mgr."
 titleAfter: "PhD."
+email: "maliniakova@s4hs.sk"
 website: "https://independent.academia.edu/EJackuliakov%C3%A1"
 avatar: "../../assets/images/authors/erika-maliniakova.jpg"
 createdAt: 2019-10-05T20:45:01.000Z
