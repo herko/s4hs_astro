@@ -42,34 +42,34 @@ All commands are run from the root of the project, from a terminal:
 
 Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
 
-## Deployment (Cloudflare Pages)
+## Deployment (Cloudflare Workers — static assets)
 
-Fully static site deployed as **Cloudflare Pages**. Pages supports custom
-domains via an external DNS CNAME/ALIAS, so the domain's nameservers can stay
-at the current provider (e.g. websupport.sk).
+Fully static site (no Worker script). `wrangler.toml` deploys the built
+`dist/` directory as **Workers Assets** (`[assets] directory = "./dist"`), so a
+plain `wrangler deploy` works.
 
-### CI build settings (Pages → Git)
+### CI build settings
 
-| Setting                 | Value           |
-| :---------------------- | :-------------- |
-| Build command           | `npm run build` |
-| Build output directory  | `dist`          |
-| Framework preset        | Astro           |
-| Env vars                | none            |
+| Setting        | Value                 |
+| :------------- | :-------------------- |
+| Build command  | `npm run build`       |
+| Deploy command | `npx wrangler deploy` |
+| Env vars       | none                  |
 
 ### Local / manual deploy
 
 ```bash
 npm run build
-npx wrangler login            # once
-npx wrangler pages deploy dist
+npx wrangler login     # once
+npx wrangler deploy
 ```
 
-### Custom domain (external DNS, no nameserver change)
+### Custom domain (`s4hs.sk`)
 
-1. In the Pages project → **Custom domains** → add `s4hs.sk` and `www.s4hs.sk`.
-   Note the assigned `<project>.pages.dev` target.
-2. At the DNS provider (websupport.sk):
-   - `ALIAS`/`ANAME` record: host `@` → `<project>.pages.dev`
-   - `CNAME` record: host `www` → `<project>.pages.dev`
-3. Cloudflare validates the records and issues SSL automatically.
+A Workers custom domain requires the zone to be on Cloudflare:
+
+1. Cloudflare → **Add a site** → `s4hs.sk` → review the imported DNS records
+   (especially **MX/email**), then set the domain's nameservers (at the
+   registrar, e.g. websupport.sk) to the two Cloudflare nameservers.
+2. Once the zone is Active: Worker `s4hs` → **Settings → Domains & Routes →
+   Add Custom Domain** → `s4hs.sk` (and `www.s4hs.sk`). DNS + SSL are automatic.
